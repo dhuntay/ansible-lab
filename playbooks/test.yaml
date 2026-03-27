@@ -1,0 +1,14 @@
+---
+- name: Simple test playbook
+  hosts: okd_cluster
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Create test file
+      copy:
+        dest: /tmp/test_from_laptop.txt
+        content: "This file was deployed from laptop through Git.\n"
+        owner: root
+        group: root
+        mode: '0644'
