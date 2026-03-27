@@ -1,0 +1,14 @@
+---
+- name: Second Test Playbook
+  hosts: okd_cluster
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Create another test file
+      copy:
+        dest: /tmp/second_test_from_laptop.txt
+        content: "This file was deployed from laptop through Git in the second test playbook.\n"
+        owner: root
+        group: root
+        mode: '0644'
