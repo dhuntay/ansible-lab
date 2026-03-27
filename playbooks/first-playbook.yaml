@@ -1,0 +1,25 @@
+---
+- name: My first Ansible playbook for OKD lab
+  hosts: okd_cluster
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Create a lab marker file with fixed content
+      copy:
+        dest: /tmp/ansible_lab_was_here
+        content: "This file was created by Ansible.\n"
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Install vim
+      yum:
+        name: vim
+        state: present
+
+    - name: Ensure sshd service is running
+      service:
+        name: sshd
+        state: started
+        enabled: yes

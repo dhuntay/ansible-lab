@@ -1,0 +1,46 @@
+---
+- name: Learning Var and Facts in OKD LAB
+  hosts: okd_cluster
+  become: yes
+  gather_facts: yes
+
+
+  vars:
+    marker_file: /tmp/node_role_file.txt
+
+
+  tasks:
+    - name: show inventory hostname
+      debug:
+        msg: "Inventory name is {{ inventory_hostname }}"
+
+
+    - name: show system hostname
+      debug:
+        msg: "System hostname is {{ ansible_hostname  }}"
+
+    - name: show default IPV4 address                                                           
+      debug:                                                                                    
+        msg: "Default IP is {{ ansible_default_ipv4.address  }}"                                       
+    - name: Show all groups this host belongs to
+      debug:
+        msg: "This host belongs to groups: {{ group_names }}"
+                                                         
+    - name: Create master marker file
+      copy:
+        dest: "{{ marker_file  }}" 
+        content: "This is the Master Node: {{ inventory_hostname  }} with IP {{ ansible_default_ipv4.address  }}\n"
+        owner: root
+        group: root
+      when: "'masters' in group_names"
+
+
+    - name: Create worker marker file
+      copy:
+        dest: "{{ marker_file }}"
+        content: "This is the WORKER node: {{ inventory_hostname }} with IP {{ ansible_default_ipv4.address }}\n"
+        owner: root
+        group: root
+        mode: '0644'
+      when: "'workers' in group_names"
+    
