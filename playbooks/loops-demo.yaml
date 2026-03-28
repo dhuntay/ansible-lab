@@ -1,6 +1,6 @@
 ---
 - name: Learn loops in OKD Lab
-  host: okd_cluster
+  hosts: okd_cluster
   become: yes
   gather_facts: no
 
