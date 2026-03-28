@@ -1,0 +1,38 @@
+---
+- name: Learn loops in OKD Lab
+  host: okd_cluster
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Install multiples packages
+      yum:
+        state: present
+      loop:
+        - vim
+        - curl
+        - wget
+
+    - name: Create multiples directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      loop:
+        - /tmp/ansible-demo-dir1
+        - /tmp/ansible-demo-dir2
+        - /tmp/ansible-demo-dir3
+
+    - name: Create multiple marker files
+      copy:
+        dest: "{{ item }}"
+        content: "Created by Ansible loop. \n"
+        owner: root
+        group: rppt
+        mode: '0644'
+      loop:
+        - /tmp/ansible-demo-dir1/file1.txt
+        - /tmp/ansible-demo-dir2/file2.txt  
+        - /tmp/ansible-demo-dir3/file3.txt
