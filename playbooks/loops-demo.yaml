@@ -30,7 +30,7 @@
         dest: "{{ item }}"
         content: "Created by Ansible loop. \n"
         owner: root
-        group: rppt
+        group: root
         mode: '0644'
       loop:
         - /tmp/ansible-demo-dir1/file1.txt
