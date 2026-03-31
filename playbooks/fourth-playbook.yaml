@@ -15,22 +15,31 @@
 
     - name: Install package for master nodes
       yum:
-        when: "'masters' in group_names"
         name: tree
         state: present
+      when: "'masters' in group_names"  
     
     - name: Install package for workers nodes
       yum:
-        when: "'workers' in group_names"
         name: wget
         state: present
+      when: "'workers' in group_names"
       
     - name: Create a file for master nodes
       copy:
-#        when: "'masters' in group_names" 
         dest: /tmp/role-based-check/role-info.txt
         content: "This is a {{ group_names }} node {{ inventory_hostname }} with IP {{ ansible_default_ipv4.address }}\n"
         owner: root
         group: root
         mode: '0644'
-      
+      when: "'masters' in group_names" 
+
+
+    - name: Create a file for worker nodes
+      copy:
+        dest: /tmp/role-based-check/role-info.txt
+        content: "This is a {{ group_names }} node {{ inventory_hostname }} with IP {{ ansible_default_ipv4.address }}\n"
+        owner: root
+        group: root
+        mode: '0644'
+      when: "'workers' in group_names"  
