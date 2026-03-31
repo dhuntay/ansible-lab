@@ -28,7 +28,7 @@
     - name: Create a file for master nodes
       copy:
         dest: /tmp/role-based-check/role-info.txt
-        content: "This is a {{ group_names }} node {{ inventory_hostname }} with IP {{ ansible_default_ipv4.address }}\n"
+        content: "This is a Master node {{ inventory_hostname }} with IP {{ ansible_default_ipv4.address }}\n"
         owner: root
         group: root
         mode: '0644'
@@ -38,7 +38,7 @@
     - name: Create a file for worker nodes
       copy:
         dest: /tmp/role-based-check/role-info.txt
-        content: "This is a {{ group_names }} node {{ inventory_hostname }} with IP {{ ansible_default_ipv4.address }}\n"
+        content: "This is a Worker node {{ inventory_hostname }} with IP {{ ansible_default_ipv4.address }}\n"
         owner: root
         group: root
         mode: '0644'
