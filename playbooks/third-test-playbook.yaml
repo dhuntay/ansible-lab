@@ -2,9 +2,10 @@
 - name: Install tree and create files on all node
   hosts: okd_cluster
   become: yes
+  gather_facts: yes
 
-  vars:
-    inventory_hostname: {{ inventory_hostname }}
+# vars:
+#   inventory_hostname: {{ inventory_hostname }}
 
   tasks:
     - name: Install tree package
@@ -23,7 +24,7 @@
     - name: Create a file on each node
       copy:
         dest: /tmp/lab-check/node-info.txt
-        content: "This node is {{ inventory_hostname }} and {{ ansible_default_ipv4.address }}\n"
+        content: "This node is {{ inventory_hostname }} and IP is {{ ansible_default_ipv4.address }}\n"
         owner: root
         group: root
         mode: '0644'
