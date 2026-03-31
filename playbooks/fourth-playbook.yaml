@@ -5,6 +5,20 @@
   gather_facts: yes
   
   tasks:
+    - name: show host name
+      debug:
+        msg: "This is {{ inventory_hostname }}
+
+    - name: show IP address
+      debug:
+        msg: "This is  IP address {{ ansible_default_ipv4.address }}"
+
+    - name: show Group name
+      debug:
+        msg: "This is  IP address {{ group_names }}"
+
+
+    
     - name: Create directory for each node
       file:
         path: /tmp/role-based-check
