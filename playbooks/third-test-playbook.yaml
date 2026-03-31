@@ -1,0 +1,31 @@
+---
+- name: Install tree and create files on all node
+  hosts: okd_cluster
+  become: yes
+
+  vars:
+    inventory_hostname: {{ inventory_hostname }}
+
+  tasks:
+    - name: Install tree package
+      yum:
+        name: tree
+        state: present
+
+    - name: Create a directory
+      file:
+        path: /tmp/lab-check
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create a file on each node
+      copy:
+        dest: /tmp/lab-check/node-info.txt
+        content: "This node is {{ inventory_hostname }} and {{ ansible_default_ipv4.address }}\n"
+        owner: root
+        group: root
+        mode: '0644'
+      
+        - 
