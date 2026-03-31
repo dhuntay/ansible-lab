@@ -1,0 +1,36 @@
+---
+- name: Create seperate based on master or worker node
+  hosts: okd_cluster
+  become: yes
+  gather_facts: yes
+  
+  tasks:
+    - name: Create directory for each node
+      file:
+        path: /tmp/role-based-check
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Install package for master nodes
+      yum:
+        when: "'masters' in group_names"
+        name: tree
+        state: present
+    
+    - name: Install package for workers nodes
+      yum:
+        when: "'workers' in group_names"
+        name: wget
+        state: present
+      
+    - name: Create a file for master nodes
+      copy:
+#        when: "'masters' in group_names" 
+        dest: /tmp/role-based-check/role-info.txt
+        content: "This is a {{ group_names }} node {{ inventory_hostname }} with IP {{ ansible_default_ipv4.address }}\n"
+        owner: root
+        group: root
+        mode: '0644'
+      
