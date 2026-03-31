@@ -7,7 +7,7 @@
   tasks:
     - name: show host name
       debug:
-        msg: "This is {{ inventory_hostname }}
+        msg: "This is {{ inventory_hostname }}"
 
     - name: show IP address
       debug:
