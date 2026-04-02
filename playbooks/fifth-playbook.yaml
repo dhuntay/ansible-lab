@@ -39,10 +39,10 @@
       when: "'masters' in group_names"
     
 
-    - name: Add master role to config file
+    - name: Add worker role to config file
       lineinfile:
         path: /tmp/config-practice/app.conf
-        line: "NODE ROLE = MASTER \n"
+        line: "NODE ROLE = WORKER \n"
         create: yes
       when: "'workers' in group_names"
     
