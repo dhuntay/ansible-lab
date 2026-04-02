@@ -1,0 +1,48 @@
+---
+- name: Create a file that use lineinfile module
+  hosts: okd_cluster
+  become: yes
+  gather_facts: yes
+
+
+  task:
+    - name: show which host being prepared
+      debug:
+        msg: "Preparing config for {{ inventory_hostname }}"
+
+    - name: create folder in both machine
+      file: 
+        path: /tmp/config-practice
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: add node name to config file 
+      lineinfile:
+        path: /tmp/config-practice/app.conf
+        line: "NODE NAME = {{ inventory_hostname }} \n"
+        create: yes
+    
+    - name: add node IP to config file 
+      lineinfile:
+        path: /tmp/config-practice/app.conf
+        line: "NODE IP = {{ ansible_default_ipv4.address }}\n"
+        create: yes
+
+
+    - name: Add master role to config file
+      lineinfile:
+        path: /tmp/config-practice/app.conf
+        line: "NODE ROLE = MASTER \n"
+        create: yes
+      when: "'masters' in group_names"
+    
+
+    - name: Add master role to config file
+      lineinfile:
+        path: /tmp/config-practice/app.conf
+        line: "NODE ROLE = MASTER \n"
+        create: yes
+      when: "'workers' in group_names"
+    
