@@ -5,7 +5,7 @@
   gather_facts: yes
 
 
-  task:
+  tasks:
     - name: show which host being prepared
       debug:
         msg: "Preparing config for {{ inventory_hostname }}"
