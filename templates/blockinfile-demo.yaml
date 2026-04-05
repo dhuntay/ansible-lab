@@ -9,7 +9,7 @@
     - name: create folder
       file:
         path: /tmp/block-practice
-        state: directories
+        state: directory
         owner: root
         group: root
         mode: '0755'
