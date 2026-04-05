@@ -1,0 +1,36 @@
+---
+- name: Do service check on sshd and capture the command with register and debug
+  hosts: okd_cluster
+  become: yes
+  gather_facts: yes
+
+  tasks:
+
+    - name: checking is the service sshd is active
+      command: systemctl is-active sshd
+      register: sshd_status
+
+    - name: Show sshd status
+      debug:
+        msg: "Host {{ inventory-hostname }} returne {{ sshd.status.stdout }} for sshd"  
+
+    - name: Fail if sshd is not active
+      fail:
+        msg: "sshd is not active on {{ inventory_hostname }}"
+      when: sshd_status.stdout != "active"
+
+    - name: Create a folder
+      file:
+        path: /tmp/service-check
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: create a file
+      copy:
+        dest: /tmp/service-check/sshd-status.txt
+        content: {{ sshd_status.stdout }}     
+        owner: root
+        group: root
+        mode: '0644'
