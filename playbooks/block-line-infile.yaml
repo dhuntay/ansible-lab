@@ -11,9 +11,10 @@
   - name: inline practice
     lineinfile:
       path: /tmp/config-practice/app.conf
-      line: 'NODE NAME = osmaster.okd.local'
-      state: present
-      backup: no
+      regrex: 'NODE NAME = '
+      line: 'Node Name = {{ inventory_hostname }}'
+#      state: present
+      backup: yes
 
 
   - name: blockinfile practice
@@ -21,7 +22,7 @@
       path: /tmp/config-practice/app.conf
       marker: "# {mark} LAB Block Practice"
       block: |
-        this is added as part of block 1
-        this is added as part of block 2
+        this is added as part of block 3
+        this is added as part of block 4
       backup: no  
    
