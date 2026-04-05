@@ -17,8 +17,8 @@
 
     - name: Create node report from templates
       template:
-        src: ../template/node-report.j2
-        dest: /tmp/te,plate-practice/node-report.txt
+        src: ../templates/node-report.j2
+        dest: /tmp/template-practice/node-report.txt
         owner: root
         group: root
         mode: '0644'    
