@@ -1,0 +1,27 @@
+---
+- name: parcticing block and line in file module
+  hosts: okd_cluster
+  become: yes
+  gather_facts: yes
+
+
+  tasks:
+
+
+  - name: inline practice
+    lineinfile:
+      path: /tmp/config-practice/app.conf
+      line: 'NODE NAME = osmaster.okd.local'
+      state: present
+      backup: yes
+
+
+  - name: blockinfile practice
+    blockinfile:
+      path: /tmp/config-practice/app.conf
+      marker: "# {mark} LAB Block Practice"
+      block: |
+        this is added as part of block 1
+        this is added as part of block 2
+      backup: yes  
+   
