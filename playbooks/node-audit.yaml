@@ -77,7 +77,7 @@
 
     - name: Create deployment summary file
       copy:
-        dest: /opttmp/node-audit/deployment-summary.txt
+        dest: /tmp/node-audit/deployment-summary.txt
         content: |
           Host: {{ inventory_hostname }}
           IP: {{ ansible_default_ipv4.address }}
