@@ -28,7 +28,7 @@
         create: yes
         block: |
           Host: {{ inventory_hostname }}    
-          IP: {{ ansible-default_ipv4.address }}
+          IP: {{ ansible_default_ipv4.address }}
           Role: {% if 'masters' in group_names %}MASTER{% else %}WORKER{% endif %}
           Packages:
             - tree
