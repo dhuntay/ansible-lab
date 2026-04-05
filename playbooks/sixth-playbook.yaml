@@ -9,6 +9,7 @@
     - name: checking is the service sshd is active
       command: systemctl is-active sshd
       register: sshd_status
+      changed_when: false
 
     - name: Show sshd status
       debug:
@@ -30,7 +31,10 @@
     - name: create a file
       copy:
         dest: /tmp/service-check/sshd-status.txt
-        content: "This is status of {{ inventory_hostname }} service {{ sshd_status.stdout }}"
+        content: |
+          Host: {{ inventory_hostname }} 
+          IP: {{ ansible_default_ipv4.address }}
+          sshd status: {{ sshd_status.stdout }}
         owner: root
         group: root
         mode: '0644'
