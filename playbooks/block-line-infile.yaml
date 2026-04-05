@@ -13,7 +13,7 @@
       path: /tmp/config-practice/app.conf
       line: 'NODE NAME = osmaster.okd.local'
       state: present
-      backup: yes
+      backup: no
 
 
   - name: blockinfile practice
@@ -23,5 +23,5 @@
       block: |
         this is added as part of block 1
         this is added as part of block 2
-      backup: yes  
+      backup: no  
    
