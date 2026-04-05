@@ -1,0 +1,88 @@
+---
+- name: node audit
+  hosts: okd_cluster
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: show which host being prepared
+      debug:
+        msg: "Preparing config for {{ inventory_hostname }}"
+
+
+    - name: Run /tmp writable precheck 
+      shell: test -w /tmp && echo "Writable" || echo "Not Writable"
+      register: precheck_result
+
+    - name: Show precheck result
+      debug:
+        msg: "Precheck result on {{ inventory_hostname }} is {{ precheck_result.rc }}"
+
+    
+    - name: Fail if precheck failed
+      fail:
+        msg: "/tmp is not writable on {{ inventory_hostname }}"
+      when: precheck_result.rc != 0
+
+    - name: install required packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - bash
+        - curl
+        - wget
+
+    - name: create folder node-audit
+      file:
+        path: {{ item}}
+        state: directory
+        owner: root 
+        group: root
+        mode: '0755'
+      loop:
+        - /tmp/node-audit
+        - /tmp/node-audit/logs
+        - /tmp/node-audit/bin
+
+ 
+
+    - name: create a file using template module
+      template:
+        src: ../templates/node-audit.sh.j2
+        dest: /opt/node-audit/node-audit.conf
+        owner: root
+        group: root
+        mode: '0755'      
+
+
+    - name: deploy audit script
+      copy:
+        dest: /tmp/node-audit/bin/node-audit.sh
+        content: |
+            #!/bin/bash
+            echo "Node Audit Script"  
+        owner: root
+        group: root
+        mode: '0755'
+
+
+    - name: Create cron job for audit script
+      cron:
+        name: "Node Audit Script"
+        minute: "15"
+        user: root
+        job: "/opt/node-audit/bin/node-audit.sh"
+
+
+    - name: Create deployment summary file
+      copy:
+        dest: /opt/node-audit/deployment-summary.txt
+        content: |
+          Host: {{ inventory_hostname }}
+          IP: {{ ansible_default_ipv4.address }}
+          Role: {% if 'masters' in group_names %}MASTER{% elif 'workers' in group_names %}WORKER{% else %}UNKNOWN{% endif %}
+          Cron installed: yes
+        owner: root
+        group: root
+        mode: '0644'    
