@@ -50,7 +50,7 @@
     - name: create a file using template module
       template:
         src: ../templates/node-audit.conf.j2
-        dest: /opt/node-audit/node-audit.conf
+        dest: /tmp/node-audit/node-audit.conf
         owner: root
         group: root
         mode: '0755'      
