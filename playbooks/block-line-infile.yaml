@@ -11,7 +11,7 @@
   - name: inline practice
     lineinfile:
       path: /tmp/config-practice/app.conf
-      regrex: 'NODE NAME = '
+      regexp: 'NODE NAME = '
       line: 'Node Name = {{ inventory_hostname }}'
 #      state: present
       backup: yes
