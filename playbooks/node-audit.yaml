@@ -49,7 +49,7 @@
 
     - name: create a file using template module
       template:
-        src: ../templates/node-audit.sh.j2
+        src: ../templates/node-audit.j2
         dest: /opt/node-audit/node-audit.conf
         owner: root
         group: root
