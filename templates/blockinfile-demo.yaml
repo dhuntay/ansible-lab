@@ -1,0 +1,37 @@
+---
+- name: blockinfile test
+  hosts: okd_cluster
+  become: yes
+  gather_facts: yes
+
+  tasks:
+
+    - name: create folder
+      file:
+        path: /tmp/block-practice
+        state: directories
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: show package name
+      debug:
+        msg: "Checking package {{ item }} for {{ inventory_hostname }}"
+      loop:
+        - tree
+        - curl
+        - wget      
+
+    - name: use of blockinfile to create a file
+      blockinfile:
+        path: tmp/block-practice/system-report.txt
+        create: yes
+        block: |
+          Host: {{ inventory_hostname }}    
+          IP: {{ ansible-default_ipv4.address }}
+          Role: {% if 'masters' in group_names %}MASTER{% else %}WORKER{% endif %}
+          Packages:
+            - tree
+            - curl
+            -wget
+
