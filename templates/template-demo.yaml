@@ -9,7 +9,7 @@
 
     - name: Create template out directory
       file:
-        path: /temp/template-practice
+        path: /tmp/template-practice
         state: directory
         owner: root
         group: root
