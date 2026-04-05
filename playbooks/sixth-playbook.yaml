@@ -30,7 +30,7 @@
     - name: create a file
       copy:
         dest: /tmp/service-check/sshd-status.txt
-        content: {{ sshd_status.stdout }}     
+        content: "This is status of {{ inventory_hostname }} service {{ sshd_status.stdout }}"
         owner: root
         group: root
         mode: '0644'
