@@ -1,0 +1,24 @@
+---
+- name: Create node report using template
+  hosts: okd_cluster
+  becomes: yes
+  gather_facts: yes
+
+  task:
+  
+
+    - name: Create template out directory
+      file:
+        path: /temp/template-practice
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create node report from templates
+      template:
+        src: ../template/node-report.j2
+        dest: /tmp/te,plate-practice/node-report.txt
+        owner: root
+        group: root
+        mode: '0644'    
