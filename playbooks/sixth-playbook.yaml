@@ -12,7 +12,7 @@
 
     - name: Show sshd status
       debug:
-        msg: "Host {{ inventory_hostname }} returne {{ sshd.status.stdout }} for sshd"  
+        msg: "Host {{ inventory_hostname }} returne {{ sshd_status.stdout }} for sshd"  
 
     - name: Fail if sshd is not active
       fail:
