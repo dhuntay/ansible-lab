@@ -72,12 +72,12 @@
         name: "Node Audit Script"
         minute: "15"
         user: root
-        job: "/opt/node-audit/bin/node-audit.sh"
+        job: "/tmp/node-audit/bin/node-audit.sh"
 
 
     - name: Create deployment summary file
       copy:
-        dest: /opt/node-audit/deployment-summary.txt
+        dest: /opttmp/node-audit/deployment-summary.txt
         content: |
           Host: {{ inventory_hostname }}
           IP: {{ ansible_default_ipv4.address }}
