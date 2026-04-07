@@ -70,7 +70,7 @@
     - name: Create cron job for audit script
       cron:
         name: "Node Audit Script"
-        minute: "15"
+        minute: "*/15"
         user: root
         job: "/tmp/node-audit/bin/node-audit.sh"
 
