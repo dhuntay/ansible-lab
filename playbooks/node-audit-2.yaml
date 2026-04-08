@@ -77,7 +77,7 @@
       name: "Node Audit Script"    
       minute: "*/5"
       user: root
-      job: /tmp/node-audit/bin/node-audit.sh
+      job: "/tmp/node-audit/bin/node-audit.sh"
 
 
   - name: Create deployment summary file
