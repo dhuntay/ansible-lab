@@ -5,7 +5,7 @@
   gather_facts: yes
 
 
-- tasks:
+  tasks:
 
 
   - name: Show which host is being prepared
