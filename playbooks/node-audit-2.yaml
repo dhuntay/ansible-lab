@@ -1,0 +1,90 @@
+--- 
+- name: node-audit
+  hosts: okd_cluster
+  become: yes
+  gather_facts: yes
+
+
+- tasks:
+
+
+  - name: Show which host is being prepared
+    debug:
+      msg: "Preparing config for {{ inventory_hostname }}"
+
+  - name: Rum /tmp writable Precheck
+    shell: test -w \tmp && echo "Writable" || echo "Not Writable"
+    register: precheck_output
+    changed_when: false
+    failed_when: false
+
+
+  - name: Show Precheck result      
+    debug:
+      msg: "Precheck output on host {{ inventory_hostname }} is {{ precheck_output.rc }}"
+
+
+  - name: Fial task if Precheck fail
+    fail:
+      msg: "/tmp is not writable on {{ inventory_hostname }}"
+    when: precheck_output.rc != 0
+
+
+  - name: install required packages
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - bash
+      - curl
+      - wget
+      - tree
+
+  - name: Create Folder node-audit
+    file:
+      path: "{{ itme }}"
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
+    loop:
+      - /tmp/node-audit
+      - /tmp/node-audit/log
+      - /tmp/node-audit/bin
+
+  - name: Create file using Template module
+    template:
+      src: ../templates/node-audit.conf.j2
+      dest: /tmp/node-audit/node-audit.conf
+      owner: root
+      group: root
+      mode: '0755'     
+
+  - name: Deploy Audit Script
+    copy:
+      dest: /tmp/node-audit/bin/node-audit.sh
+      content: |
+        #!/bin/bash
+        echo "Node Audit Script && Hello World!" 
+      owner: root
+      group: root
+      mode:  '0755' 
+
+  - name: corn job schedule
+    corn:
+      name: "Node Audit Script"    
+      minute: "*/5"
+      user: root
+      job: /tmp/node-audit/bin/node-audit.sh
+
+
+  - name: Create deployment summary file
+    copy:
+      dest: /tmp/node-audit/deployment-summary.txt
+      content: |
+        #!/bash/bin
+        echo "Oh balley balley"
+      owner: root
+      group: root
+      mode: '0644'  
+
