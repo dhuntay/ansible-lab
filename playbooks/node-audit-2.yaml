@@ -49,7 +49,7 @@
       mode: '0755'
     loop:
       - /tmp/node-audit
-      - /tmp/node-audit/log
+      - /tmp/node-audit/logs
       - /tmp/node-audit/bin
 
   - name: Create file using Template module
