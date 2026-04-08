@@ -65,7 +65,9 @@
       dest: /tmp/node-audit/bin/node-audit.sh
       content: |
         #!/bin/bash
-        echo "Node Audit Script && Hello World!" 
+        source /tmp/node-audit/node-audit.conf
+        echo "Node Audit Script && Hello World!"
+        echo "Audit run on $HOST with IP $IP and role $ROLE as $(date)" >> "$LOG_FILE"
       owner: root
       group: root
       mode:  '0755' 
