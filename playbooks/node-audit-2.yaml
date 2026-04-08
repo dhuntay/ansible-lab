@@ -71,7 +71,7 @@
       mode:  '0755' 
 
   - name: corn job schedule
-    corn:
+    cron:
       name: "Node Audit Script"    
       minute: "*/5"
       user: root
