@@ -1,4 +1,4 @@
 HOST: {{ inventory_hostname }}
 IP: {{ ansible_default_ipv4.address }}
-ROLE: {% if 'masters' in group_names %}MASTER{% else %}WORKER{% endif %}
+ROLE: {% if 'masters' in group_names %}MASTER{% else %}WORKER{% endif %} '/n'
 LOG_FILE: /tmp/node-audit/logs/audit.log
