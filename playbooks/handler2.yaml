@@ -23,7 +23,7 @@
         owner: root
         group: root
         mode: '0644'
-      notify: Record config update
+      notify: Records config update
 
 
     - name: Create helper Script
