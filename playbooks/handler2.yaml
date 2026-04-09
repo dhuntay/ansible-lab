@@ -21,7 +21,7 @@
         content: |
           Host: {{ inventoery_hostname }}
           IP: {{ anisble_default_ipv4.address }}
-          Role: {% if 'masters' in group_names %} MASTER{% else %}WROKER{% endif %}
+          Role: {% if 'masters' in group_names %}MASTER{% else %}WROKER{% endif %}
           owner: root
           group: root
           mode: '0644'
@@ -49,4 +49,3 @@
         group: root
         mode: '0644'
 
-        
