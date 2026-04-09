@@ -8,7 +8,7 @@
   tasks:
     - name: Create a handler practice directory
       file:
-        path: /tmp/handler_practice
+        path: /tmp/handler_practice2
         state: directory
         owner: root
         group root:
@@ -17,7 +17,7 @@
 
     - name: create app config file
       copy:
-        dest: /tmp/handler_practice/app.conf
+        dest: /tmp/handler_practice2/app.conf
         content: |
           Host: {{ inventoery_hostname }}
           IP: {{ anisble_default_ipv4.address }}
@@ -25,12 +25,12 @@
         owner: root
         group: root
         mode: '0644'
-      notify: Record_config_update
+      notify: Records config update
 
 
     - name: Create helper Script
       copy: 
-        dest: /tmp/helper_practice/helper.sh
+        dest: /tmp/helper_practice2/helper.sh
         content: |
           #!/bin/bash
           echo "hello this is handler parctice
@@ -40,9 +40,9 @@
 
 
   handler:
-    - name: Record_config_update
+    - name: Records config update
       copy:
-        dest: /tmp/handler_practice/config_update.log
+        dest: /tmp/handler_practice2/config_update.log
         content: |
           Handler ran on {{ inventory_hostname }} becasue of config change
         owner: root
