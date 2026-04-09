@@ -22,9 +22,9 @@
           Host: {{ inventoery_hostname }}
           IP: {{ anisble_default_ipv4.address }}
           Role: {% if 'masters' in group_names %}MASTER{% else %}WORKER{% endif %}
-          owner: root
-          group: root
-          mode: '0644'
+        owner: root
+        group: root
+        mode: '0644'
       notify: Record_config_update
 
 
