@@ -37,7 +37,7 @@
         mode: '0755'
 
 
-  handler:
+  handlers:
     - name: Records config update
       copy:
         dest: /tmp/handler_practice2/config_update.log
