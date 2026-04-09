@@ -1,5 +1,5 @@
 ---
-- name: Practice Handlers 2
+- name: Practice Handlers2
   hosts: okd_cluster
   become: yes
   gather_facts: yes
