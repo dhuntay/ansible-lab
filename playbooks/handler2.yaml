@@ -28,10 +28,10 @@
 
     - name: Create helper Script
       copy: 
-        dest: /tmp/helper_practice2/helper.sh
+        dest: /tmp/handler_practice2/helper.sh
         content: |
           #!/bin/bash
-          echo "hello this is handler parctice
+          echo "hello this is handler practice"
         owner: root
         group: root
         mode: '0755'
