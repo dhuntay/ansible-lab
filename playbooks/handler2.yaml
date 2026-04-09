@@ -4,28 +4,26 @@
   become: yes
   gather_facts: yes
 
-
   tasks:
     - name: Create a handler practice directory
       file:
         path: /tmp/handler_practice2
         state: directory
         owner: root
-        group root:
-        mode: '0755
+        group: root
+        mode: '0755'
 
-
-    - name: create app config file
+    - name: Create app config file
       copy:
-        dest: /tmp/handler_practice2/app.conf
+        dest: /tmp/handler_practice/app.conf
         content: |
-          Host: {{ inventoery_hostname }}
-          IP: {{ anisble_default_ipv4.address }}
+          HOST: {{ inventory_hostname }}
+          IP: {{ ansible_default_ipv4.address }}
           Role: {% if 'masters' in group_names %}MASTER{% else %}WORKER{% endif %}
         owner: root
         group: root
         mode: '0644'
-      notify: Records config update
+      notify: Record config update
 
 
     - name: Create helper Script
