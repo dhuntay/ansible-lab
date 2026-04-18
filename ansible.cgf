@@ -1,0 +1,10 @@
+[defaults]
+# Use the new built-in callback options
+stdout_callback = default
+result_format = yaml
+
+# Other useful settings
+host_key_checking = False
+retry_files_enabled = False
+gathering = smart
+fact_caching = memory
